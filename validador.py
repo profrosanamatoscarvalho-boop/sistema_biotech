@@ -1,24 +1,21 @@
-# Archivo: validador.py
+class ValidadorSequencia:
+    """
+    Sistema de checagem e integridade de amostras biologicas e fitas de acidos nucleicos.
+    """
 
-def checar_secuencia_adn(sequencia):
-    """Verifica se a sequencia contem apenas bases validas (A, T, C, G)"""
-    if not sequencia:
-        return False
-    
-    sequencia = sequencia.upper()
-    bases_validas = {'A', 'T', 'C', 'G'}
-    
-    for base in sequencia:
-        if base not in bases_validas:
+    def __init__(self, sequencia: str):
+        self.seq = sequencia.strip().upper()
+
+    def validar_rna(self) -> bool:
+        """Verifica se a fita contem apenas as bases validas de RNA (A, U, C, G)."""
+        if not self.seq:
             return False
-    return True
+        bases_rna = {'A', 'U', 'C', 'G'}
+        return set(self.seq).issubset(bases_rna)
 
-def calcular_conteudo_gc(sequencia):
-    """Calcula a porcentagem de bases G e C na sequencia de DNA"""
-    # BUG PROPOSITAL: Se a sequencia for vazia, vai quebrar aqui!
-    sequencia = sequencia.upper()
-    g_count = sequencia.count('G')
-    c_count = sequencia.count('C')
-    
-    porcentagem = ((g_count + c_count) / len(sequencia)) * 100
-    return porcentagem
+    def validar_dna(self) -> bool:
+        """Verifica se a fita contem apenas as bases validas de DNA (A, T, C, G)."""
+        if not self.seq:
+            return False
+        bases_dna = {'A', 'T', 'C', 'G'}
+        return set(self.seq).issubset(bases_dna)
